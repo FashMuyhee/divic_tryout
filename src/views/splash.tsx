@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
 import React from 'react';
 import {CenterView} from 'components';
-import Animated, {Extrapolation, interpolate, interpolateColor, runOnJS, useAnimatedStyle, useSharedValue, withDelay, withTiming} from 'react-native-reanimated';
+import Animated, {interpolate, interpolateColor, runOnJS, useAnimatedStyle, useSharedValue, withDelay, withTiming} from 'react-native-reanimated';
 import logo from 'assets/imgs/logo.png';
 import {COLORS, SCREEN_WIDTH} from 'utils';
 import {Path, Svg} from 'react-native-svg';
@@ -23,14 +23,6 @@ export const SplashScreen = ({navigation}: Props) => {
   const logoContentWrapperStyle = useAnimatedStyle(() => {
     return {
       display: onboardContent.value == 1 ? 'none' : 'flex',
-    };
-  });
-
-  const onboardContentWrapper = useAnimatedStyle(() => {
-    const opacity = interpolate(onboardContent.value, [0, 1], [0, 1], Extrapolation.CLAMP);
-    return {
-      display: onboardContent.value == 1 ? 'flex' : 'none',
-      opacity,
     };
   });
 
@@ -75,7 +67,7 @@ export const SplashScreen = ({navigation}: Props) => {
       4000,
       withTiming(4, {duration: 1000}, () => {
         // handles onboarding content
-        runOnJS(navigation.navigate)('onboarding');
+        runOnJS(navigation.replace)('onboarding');
       }),
     );
   };
