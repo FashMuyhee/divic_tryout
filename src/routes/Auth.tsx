@@ -1,6 +1,9 @@
-import {createStackNavigator} from '@react-navigation/stack';
+import {
+  CardStyleInterpolators,
+  createStackNavigator,
+} from '@react-navigation/stack';
 import {AuthScreens} from './types';
-import {LoginScreen, SplashScreen} from 'views';
+import {LoginScreen, OnboardingScreen, SplashScreen} from 'views';
 
 const Nav = createStackNavigator<AuthScreens>();
 
@@ -11,8 +14,15 @@ export const AuthStack = () => {
       screenOptions={{
         headerShown: false,
       }}>
-      <Nav.Screen name="login" component={LoginScreen} />
       <Nav.Screen name="splash" component={SplashScreen} />
+      <Nav.Screen
+        name="onboarding"
+        component={OnboardingScreen}
+        options={{
+          cardStyleInterpolator: CardStyleInterpolators.forFadeFromCenter,
+        }}
+      />
+      <Nav.Screen name="login" component={LoginScreen} />
     </Nav.Navigator>
   );
 };

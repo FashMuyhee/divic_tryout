@@ -1,5 +1,6 @@
 export type AuthScreens = {
   login: undefined;
+  onboarding: undefined;
   splash: undefined;
 };
 
