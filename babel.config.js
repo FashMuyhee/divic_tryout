@@ -8,7 +8,7 @@ module.exports = {
         'components': './src/components',
         'utils': './src/utils',
         'assets': './src/assets',
-        'modules': './src/modules',
+        'views': './src/views',
         'hooks': './src/hooks',
         'contexts': './src/contexts',
         'routes': './src/routes',
