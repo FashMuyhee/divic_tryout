@@ -1,4 +1,4 @@
-import {View, Image} from 'react-native';
+import {View, Image, StatusBar} from 'react-native';
 import React from 'react';
 import {COLORS, SCREEN_PADDING, SCREEN_WIDTH} from 'utils';
 import logoFull from 'assets/imgs/logo-full.png';
@@ -20,6 +20,7 @@ export const OnboardingScreen = ({navigation}: Props) => {
         backgroundColor: COLORS.PRIMARY,
         paddingHorizontal: SCREEN_PADDING * 1.2,
       }}>
+      <StatusBar backgroundColor={COLORS.PRIMARY} barStyle="light-content" />
       <Image source={logoFull} style={{width: SCREEN_WIDTH * 0.6, height: 36}} />
       <Button onPress={() => navigation.navigate('login')} text="Login" bgColor={COLORS.WHITE} textColor={COLORS.PRIMARY} style={{position: 'absolute', bottom: 50}} />
     </View>

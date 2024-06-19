@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {StatusBar, StyleSheet} from 'react-native';
 import React from 'react';
 import {CenterView} from 'components';
 import Animated, {interpolate, interpolateColor, runOnJS, useAnimatedStyle, useSharedValue, withDelay, withTiming} from 'react-native-reanimated';
@@ -99,6 +99,7 @@ export const SplashScreen = ({navigation}: Props) => {
 
   return (
     <Animated.View style={[styles.wrapper, animatedWrapperStyle]}>
+      <StatusBar backgroundColor={COLORS.PRIMARY} barStyle="light-content" />
       <LogoContent />
     </Animated.View>
   );
