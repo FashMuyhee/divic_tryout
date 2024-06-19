@@ -14,11 +14,13 @@ export const Button = ({
   text,
   isLoading,
   textColor = COLORS.WHITE,
-  bgColor = COLORS.PRIMARY,
+  bgColor = COLORS.PRIMARY,style
 }: ButtonProps) => {
   return (
-    <TouchableNativeFeedback onPress={onPress} disabled={isLoading}>
-      <View style={[styles.wrapper, {backgroundColor: bgColor}]}>
+    <TouchableNativeFeedback
+      onPress={onPress}
+      disabled={isLoading}>
+      <View style={[styles.wrapper, {backgroundColor: bgColor,},style]}>
         {isLoading && <ActivityIndicator size="small" color={COLORS.WHITE} />}
         <Text
           textAlign="center"
