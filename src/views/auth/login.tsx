@@ -4,6 +4,7 @@ import {COLORS, SCREEN_PADDING, SCREEN_WIDTH} from 'utils';
 import {Button, ChevronLeftIcon, Text, TextInput} from 'components';
 import {useForm} from 'hooks';
 import {LoginForm} from './api/type';
+import {useLogin} from './api/service';
 
 type Props = {
   isVisible: boolean;
@@ -15,8 +16,10 @@ export const LoginScreen = ({isVisible, onClose}: Props) => {
     validationRule: {pwd: 'password', usr: 'email', url: 'url'},
   });
 
+  const {mutate, isPending} = useLogin();
+
   const onLogin = (v: LoginForm) => {
-    console.log(v);
+    mutate(v);
   };
 
   return (
@@ -43,7 +46,7 @@ export const LoginScreen = ({isVisible, onClose}: Props) => {
               <TextInput inputType="url" mb={27} errorMessage={errors?.url} value={values?.url} onChangeText={v => register({value: v, name: 'url'})} placeholder="URL" />
               <TextInput inputType="email" mb={27} errorMessage={errors?.usr} value={values?.usr} onChangeText={v => register({value: v, name: 'usr'})} placeholder="Username/email" />
               <TextInput inputType="password" errorMessage={errors?.pwd} value={values?.pwd} onChangeText={v => register({value: v, name: 'pwd'})} placeholder="Password" />
-              <Button style={{position: 'absolute', width: '100%', alignSelf: 'center', bottom: 60}} text="Login" disabled={!values} onPress={() => handleSubmit(onLogin)} />
+              <Button isLoading={isPending} style={{position: 'absolute', width: '100%', alignSelf: 'center', bottom: 60}} text="Login" disabled={!values} onPress={() => handleSubmit(onLogin)} />
             </ScrollView>
           </View>
         </View>
