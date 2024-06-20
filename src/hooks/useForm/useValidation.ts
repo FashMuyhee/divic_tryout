@@ -35,8 +35,6 @@ export const useValidation = (): FieldValidation => {
         break;
       case 'url':
         if (isValidUrl(String(value))) {
-          console.log('valid');
-
           error = null;
         } else error = 'Invalid url';
         break;
