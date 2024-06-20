@@ -5,11 +5,12 @@ import React from 'react';
 import {RouteProp} from '@react-navigation/native';
 import {BottomTabScreens} from './types';
 import {COLORS, FONTS, IS_ANDROID, SCREEN_PADDING} from 'utils';
-import {Image, View} from 'react-native';
+import {Image, Pressable, View} from 'react-native';
 import logoFull from 'assets/imgs/logo-full.png';
 import profile from 'assets/imgs/profile.png';
 import {IconButton} from 'components/commons/IconButton';
 import {ShipmentsScreen} from 'views';
+import {useAuth} from 'contexts';
 
 const Tab = createBottomTabNavigator<BottomTabScreens>();
 type Props = {
@@ -19,6 +20,8 @@ type Props = {
 const PlaceholderScreen = ({route}: Props) => <View style={{flex: 1, backgroundColor: COLORS.WHITE}} />;
 
 export const BottomsTabs = () => {
+  const {logout} = useAuth();
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -35,7 +38,11 @@ export const BottomsTabs = () => {
         component={ShipmentsScreen}
         options={{
           tabBarIcon: ({focused}) => <ShipmentIcon active={focused} />,
-          headerLeft: () => <Image source={profile} style={{marginLeft: SCREEN_PADDING, width: 40, height: 40, borderRadius: 20, resizeMode: 'center'}} />,
+          headerLeft: () => (
+            <Pressable onPress={logout}>
+              <Image source={profile} style={{marginLeft: SCREEN_PADDING, width: 40, height: 40, borderRadius: 20, resizeMode: 'center'}} />
+            </Pressable>
+          ),
           headerRight: () => <IconButton icon={<BellIcon />} style={{marginRight: SCREEN_PADDING}} size={40} bg="#F4F2F8" />,
           headerTitle: () => <Image style={{height: 16, tintColor: COLORS.PRIMARY, width: 90, resizeMode: 'contain'}} source={logoFull} />,
         }}
