@@ -13,6 +13,13 @@ export const ShipmentsScreen = (props: Props) => {
   const [isToggled, toggle] = useToggle();
   const [filters, setFilters] = React.useState<string[]>([]);
 
+  const filteredShipment = React.useMemo(() => {
+    return shipmentHistory.filter(shipment => {
+      if (filters.length === 0) return true;
+      return filters.includes(shipment.status);
+    });
+  }, [filters]);
+
   return (
     <View style={{flex: 1, backgroundColor: COLORS.WHITE, paddingTop: 20}}>
       <StatusBar barStyle="dark-content" backgroundColor={COLORS.WHITE} />
@@ -34,7 +41,7 @@ export const ShipmentsScreen = (props: Props) => {
         keyExtractor={i => i.shippingId}
         contentContainerStyle={{paddingHorizontal: SCREEN_PADDING, marginTop: 10}}
         renderItem={({item}) => <ShipmentTile shipment={item} />}
-        data={shipmentHistory}
+        data={!!filters ? filteredShipment : shipmentHistory}
       />
       <FilterSheet status={filters} onDone={setFilters} visible={isToggled} onClose={toggle} />
     </View>
