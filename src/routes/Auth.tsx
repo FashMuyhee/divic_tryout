@@ -7,7 +7,7 @@ const Nav = createStackNavigator<AuthScreens>();
 export const AuthStack = () => {
   return (
     <Nav.Navigator
-      initialRouteName="onboarding"
+      initialRouteName="splash"
       screenOptions={{
         headerShown: false,
       }}>
