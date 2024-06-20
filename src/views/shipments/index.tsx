@@ -1,8 +1,9 @@
-import {View} from 'react-native';
+import {FlatList, View} from 'react-native';
 import React from 'react';
 import {COLORS, SCREEN_PADDING} from 'utils';
-import {StackView, Text} from 'components';
-import {Filter, ScanBarcode, Searchbar} from './components';
+import {Checkbox, StackView, Text} from 'components';
+import {ListHeader, Filter, ScanBarcode, Searchbar, ShipmentTile, ShipmentStatus} from './components';
+import {useToggle} from 'hooks';
 
 type Props = {};
 
@@ -22,6 +23,13 @@ export const ShipmentsScreen = (props: Props) => {
         <Filter />
         <ScanBarcode />
       </StackView>
+      <ListHeader />
+      <FlatList
+        contentContainerStyle={{paddingHorizontal: SCREEN_PADDING, marginTop: 10}}
+        renderItem={({item}) => <ShipmentTile status={item} />}
+        data={['canceled', 'canceled', 'delivered', 'error', 'on hold', 'received', 'received'] as ShipmentStatus[]}
+      />
+      <View style={{paddingHorizontal: SCREEN_PADDING}}></View>
     </View>
   );
 };
