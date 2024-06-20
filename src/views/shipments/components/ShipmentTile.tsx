@@ -1,7 +1,7 @@
 import {View, StyleSheet, Pressable, Linking} from 'react-native';
 import React from 'react';
 import {ArrowRightIcon, Button, CenterView, Checkbox, ExpandIcon, ParcelIcon, PhoneIcon, StackView, Text, WhatsappIcon} from 'components';
-import Animated, {Easing, interpolate, interpolateColor, runOnJS, useAnimatedStyle, useSharedValue, withTiming} from 'react-native-reanimated';
+import Animated, {Easing, interpolate, interpolateColor, ReduceMotion, runOnJS, useAnimatedStyle, useSharedValue, withTiming} from 'react-native-reanimated';
 import {BORDER_RADIUS, COLORS} from 'utils';
 import {useToggle} from 'hooks';
 
@@ -57,11 +57,11 @@ const StatusTag = ({status = 'error'}: {status: ShipmentStatus}) => {
 
 export const ShipmentTile = ({status}: Props) => {
   const shareValue = useSharedValue(0);
-  const [bodySectionHeight, setBodySectionHeight] = React.useState(0);
+  const [accordionHeight, setAccordionHeight] = React.useState(0);
   const [isToggled, onToggle] = useToggle();
 
-  const bodyHeight = useAnimatedStyle(() => ({
-    height: interpolate(shareValue.value, [0, 1], [0, bodySectionHeight]),
+  const contentHeight = useAnimatedStyle(() => ({
+    height: interpolate(shareValue.value, [0, 1], [0, accordionHeight]),
   }));
 
   const iconBtn = useAnimatedStyle(() => {
@@ -73,19 +73,13 @@ export const ShipmentTile = ({status}: Props) => {
   });
 
   const toggleButton = () => {
-    if (shareValue.value === 0) {
-      shareValue.value = withTiming(1, {
-        duration: 500,
-        easing: Easing.bezier(0.4, 0.0, 0.2, 1),
-      });
-      runOnJS(onToggle)();
-    } else {
-      shareValue.value = withTiming(0, {
-        duration: 500,
-        easing: Easing.bezier(0.4, 0.0, 0.2, 1),
-      });
-      runOnJS(onToggle)();
-    }
+    shareValue.value = withTiming(shareValue.value === 0 ? 1 : 0, {
+      duration: 500,
+      easing: Easing.elastic(1),
+      reduceMotion: ReduceMotion.System,
+
+    });
+    runOnJS(onToggle)();
   };
 
   const onOpenWhatApp = () => {
@@ -125,11 +119,11 @@ export const ShipmentTile = ({status}: Props) => {
           </Pressable>
         </Animated.View>
       </View>
-      <Animated.View style={[styles.contentContainer, bodyHeight]}>
+      <Animated.View style={[styles.contentContainer, contentHeight]}>
         <View
           style={styles.content}
           onLayout={event => {
-            setBodySectionHeight(event.nativeEvent.layout.height);
+            setAccordionHeight(event.nativeEvent.layout.height);
           }}>
           <StackView align="center" style={{width: '100%', justifyContent: 'space-between'}}>
             <View style={{rowGap: 2}}>
