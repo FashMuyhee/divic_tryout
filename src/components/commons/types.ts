@@ -8,6 +8,8 @@ export interface ButtonProps {
   textColor?: string;
   bgColor?: string;
   style?: StyleProp<ViewStyle>;
+  withIcon?: boolean;
+  icon?: React.ReactElement;
 }
 
 export interface TextProps {

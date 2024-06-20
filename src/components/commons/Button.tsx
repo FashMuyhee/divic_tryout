@@ -4,7 +4,7 @@ import {ButtonProps} from './types';
 import {COLORS} from 'utils';
 import {Text} from './Text';
 
-export const Button = ({onPress, text, isLoading, textColor = COLORS.WHITE, bgColor = COLORS.PRIMARY, style, disabled = false}: ButtonProps) => {
+export const Button = ({onPress, text, isLoading, textColor = COLORS.WHITE, bgColor = COLORS.PRIMARY, style, disabled = false, withIcon, icon}: ButtonProps) => {
   const isDisabled = disabled || isLoading;
 
   const bg = React.useMemo(() => {
@@ -23,9 +23,12 @@ export const Button = ({onPress, text, isLoading, textColor = COLORS.WHITE, bgCo
         {isLoading ? (
           <ActivityIndicator size="small" color={COLORS.WHITE} />
         ) : (
-          <Text textAlign="center" color={color} fontSize={17} fontWeight="bold">
-            {isLoading ? 'Loading' : text}
-          </Text>
+          <>
+            {icon}
+            <Text textAlign="center" color={color} fontSize={17} fontWeight={withIcon ? 'regular' : 'bold'}>
+              {isLoading ? 'Loading' : text}
+            </Text>
+          </>
         )}
       </View>
     </TouchableNativeFeedback>
@@ -39,7 +42,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     flexDirection: 'row',
     alignItems: 'center',
-    columnGap: 10,
+    columnGap: 5,
     justifyContent: 'center',
   },
 });
