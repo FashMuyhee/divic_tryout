@@ -4,12 +4,11 @@ import {ArrowRightIcon, Button, CenterView, Checkbox, ExpandIcon, ParcelIcon, Ph
 import Animated, {Easing, interpolate, interpolateColor, ReduceMotion, runOnJS, useAnimatedStyle, useSharedValue, withTiming} from 'react-native-reanimated';
 import {BORDER_RADIUS, COLORS} from 'utils';
 import {useToggle} from 'hooks';
+import {Shipment, ShipmentStatus} from '../api/types';
 
 type Props = {
-  status: ShipmentStatus;
+  shipment: Shipment;
 };
-
-export type ShipmentStatus = 'received' | 'error' | 'delivered' | 'on hold' | 'canceled';
 
 const StatusTag = ({status = 'error'}: {status: ShipmentStatus}) => {
   const color = React.useMemo(() => {
@@ -55,7 +54,7 @@ const StatusTag = ({status = 'error'}: {status: ShipmentStatus}) => {
   );
 };
 
-export const ShipmentTile = ({status}: Props) => {
+export const ShipmentTile = ({shipment}: Props) => {
   const shareValue = useSharedValue(0);
   const [accordionHeight, setAccordionHeight] = React.useState(0);
   const [isToggled, onToggle] = useToggle();
@@ -77,48 +76,51 @@ export const ShipmentTile = ({status}: Props) => {
       duration: 500,
       easing: Easing.elastic(1),
       reduceMotion: ReduceMotion.System,
-
     });
     runOnJS(onToggle)();
   };
 
   const onOpenWhatApp = () => {
-    Linking.openURL(`https://wa.me/`);
+    Linking.openURL(`https://wa.me/${shipment.phoneNo}`);
   };
 
   const onOpenDialer = () => {
-    Linking.openURL(`tel:3043`);
+    Linking.openURL(`tel:${shipment.phoneNo}`);
   };
 
   return (
     <View style={styles.wrapper}>
+      {/* TOP CONTENT */}
       <View style={styles.container}>
         <Checkbox />
         <ParcelIcon />
-        <View>
+        <View style={{width: '40%'}}>
           <Text color="#3F395C" fontSize={13}>
             AWB
           </Text>
           <Text fontWeight="bold" fontSize={18}>
-            41785691423
+            {shipment.shippingId}
           </Text>
           <StackView align="center" style={{columnGap: 5}}>
-            <Text fontSize={13} color="#757281">
-              Cairo
+            <Text fontSize={13} color="#757281" truncate>
+              {shipment.origin.city}
             </Text>
             <ArrowRightIcon />
-            <Text fontSize={13} color="#757281">
-              Alexandria
+            <Text fontSize={13} color="#757281" truncate>
+              {shipment.destination.city}
             </Text>
           </StackView>
         </View>
-        <StatusTag status={status} />
-        <Animated.View style={[styles.iconBtn, iconBtn]}>
+        <StackView style={{flex: 1}} justify="space-between">
+          <StatusTag status={shipment.status} />
           <Pressable onPress={toggleButton}>
-            <ExpandIcon isWhite={isToggled} />
+            <Animated.View style={[styles.iconBtn, iconBtn]}>
+              <ExpandIcon isWhite={isToggled} />
+            </Animated.View>
           </Pressable>
-        </Animated.View>
+        </StackView>
       </View>
+      {/* ACCORDION CONTENT */}
       <Animated.View style={[styles.contentContainer, contentHeight]}>
         <View
           style={styles.content}
@@ -126,27 +128,27 @@ export const ShipmentTile = ({status}: Props) => {
             setAccordionHeight(event.nativeEvent.layout.height);
           }}>
           <StackView align="center" style={{width: '100%', justifyContent: 'space-between'}}>
-            <View style={{rowGap: 2}}>
+            <View style={{rowGap: 2, maxWidth: '45%'}}>
               <Text fontSize={11} color={COLORS.PRIMARY}>
                 Origin
               </Text>
               <Text numberLines={1} fontSize={16}>
-                Cario
+                {shipment.origin.city}
               </Text>
               <Text numberLines={1} color={COLORS.BLUE_GREY} fontSize={13}>
-                Dokki, 22 Nile St.
+                {shipment.origin.address}
               </Text>
             </View>
             <ArrowRightIcon big />
-            <View style={{rowGap: 2}}>
+            <View style={{rowGap: 2, maxWidth: '45%'}}>
               <Text fontSize={11} color={COLORS.PRIMARY}>
                 Destination
               </Text>
               <Text numberLines={1} fontSize={16}>
-                Alexandria
+                {shipment.destination.city}
               </Text>
               <Text numberLines={1} color={COLORS.BLUE_GREY} fontSize={13}>
-                Smoha, 22 max St.
+                {shipment.destination.address}
               </Text>
             </View>
           </StackView>
@@ -168,10 +170,11 @@ const styles = StyleSheet.create({
   },
   container: {
     height: 70,
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
     paddingHorizontal: 14,
     flexDirection: 'row',
     alignItems: 'center',
+    columnGap: 10,
   },
   contentContainer: {
     backgroundColor: '#f9f9fb',
