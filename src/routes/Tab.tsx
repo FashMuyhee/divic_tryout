@@ -7,6 +7,7 @@ import {BottomTabScreens} from './types';
 import {COLORS, FONTS, IS_ANDROID, SCREEN_PADDING} from 'utils';
 import {Image, View} from 'react-native';
 import logoFull from 'assets/imgs/logo-full.png';
+import profile from 'assets/imgs/profile.png';
 import {IconButton} from 'components/commons/IconButton';
 import {ShipmentsScreen} from 'views';
 
@@ -32,14 +33,7 @@ export const BottomsTabs = () => {
         component={ShipmentsScreen}
         options={{
           tabBarIcon: ({focused}) => <ShipmentIcon active={focused} />,
-          headerLeft: () => (
-            <Image
-              source={{
-                uri: 'https://pixabay.com/get/gcced22f629d6f007d0e28d89341ca63fa171304457a3d8049ec9a2def2502112e246824630dfa93f7822cfabceb610f1d30a0ba91ae6f7fe2ea0bb9245364fde0679b60eafa9f619ae153be1f51bbe02_1280.png?attachment=',
-              }}
-              style={{marginLeft: SCREEN_PADDING, width: 40, height: 40, borderRadius: 20, resizeMode: 'center'}}
-            />
-          ),
+          headerLeft: () => <Image source={profile} style={{marginLeft: SCREEN_PADDING, width: 40, height: 40, borderRadius: 20, resizeMode: 'center'}} />,
           headerRight: () => <IconButton icon={<BellIcon />} style={{marginRight: SCREEN_PADDING}} size={40} bg="#F4F2F8" />,
           headerTitle: () => <Image style={{height: 16, tintColor: COLORS.PRIMARY, width: 90, resizeMode: 'contain'}} source={logoFull} />,
         }}
