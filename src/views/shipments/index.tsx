@@ -4,10 +4,14 @@ import {COLORS, SCREEN_PADDING} from 'utils';
 import {Checkbox, StackView, Text} from 'components';
 import {ListHeader, Filter, ScanBarcode, Searchbar, ShipmentTile, ShipmentStatus} from './components';
 import {useToggle} from 'hooks';
+import {FilterSheet} from './sheets';
 
 type Props = {};
 
 export const ShipmentsScreen = (props: Props) => {
+  const [isToggled, toggle] = useToggle();
+  const [filters, setFilters] = React.useState<string[]>([]);
+
   return (
     <View style={{flex: 1, backgroundColor: COLORS.WHITE, paddingTop: 20}}>
       <View style={{paddingHorizontal: SCREEN_PADDING}}>
@@ -20,7 +24,7 @@ export const ShipmentsScreen = (props: Props) => {
       </View>
       <Searchbar />
       <StackView style={{marginVertical: 24, justifyContent: 'space-between', paddingHorizontal: SCREEN_PADDING}}>
-        <Filter />
+        <Filter onPress={toggle} />
         <ScanBarcode />
       </StackView>
       <ListHeader />
@@ -29,7 +33,7 @@ export const ShipmentsScreen = (props: Props) => {
         renderItem={({item}) => <ShipmentTile status={item} />}
         data={['canceled', 'canceled', 'delivered', 'error', 'on hold', 'received', 'received'] as ShipmentStatus[]}
       />
-      <View style={{paddingHorizontal: SCREEN_PADDING}}></View>
+      <FilterSheet status={filters} onDone={setFilters} visible={isToggled} onClose={toggle} />
     </View>
   );
 };
