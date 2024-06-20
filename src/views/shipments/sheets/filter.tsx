@@ -1,7 +1,9 @@
 import {View, Modal, Pressable} from 'react-native';
 import React from 'react';
 import {BORDER_RADIUS, COLORS, SCREEN_HEIGHT, SCREEN_WIDTH} from 'utils';
-import {CenterView, StackView, Text} from 'components';
+import {StackView, Text} from 'components';
+import {useGetShipmentStatusList} from '../api/service';
+import {shipmentStatusList} from '../api/mock-shipment';
 
 type Props = {
   visible: boolean;
@@ -39,6 +41,7 @@ const FilterChip = ({onChange, status, selected}: FilterChipProps) => {
 
 export const FilterSheet = ({onClose, visible, onDone, status}: Props) => {
   const [filters, setFilters] = React.useState<string[]>([]);
+  const {data, isLoading} = useGetShipmentStatusList();
 
   const onChange = (s: string) => {
     if (findStatus(s)) {
@@ -80,7 +83,8 @@ export const FilterSheet = ({onClose, visible, onDone, status}: Props) => {
             </Text>
 
             <StackView style={{flexWrap: 'wrap', columnGap: 10, rowGap: 10, marginTop: 20}}>
-              {['received', 'putaway', 'delivered', 'canceled', 'rejected', 'lost', 'on hold'].map((item, i) => (
+              {/* data will replace shipmentStatusList if API  were to be working */}
+              {shipmentStatusList.map((item, i) => (
                 <FilterChip onChange={onChange} key={i} selected={findStatus(item)} status={item} />
               ))}
             </StackView>

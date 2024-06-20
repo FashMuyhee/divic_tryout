@@ -6,12 +6,14 @@ import {ListHeader, Filter, ScanBarcode, Searchbar, ShipmentTile} from './compon
 import {useToggle} from 'hooks';
 import {FilterSheet} from './sheets';
 import {shipmentHistory} from './api/mock-shipment';
+import {useGetShipment} from './api/service';
 
 type Props = {};
 
 export const ShipmentsScreen = (props: Props) => {
   const [isToggled, toggle] = useToggle();
   const [filters, setFilters] = React.useState<string[]>([]);
+  const {data, isLoading, refetch, isRefetching} = useGetShipment();
 
   const filteredShipment = React.useMemo(() => {
     return shipmentHistory.filter(shipment => {
@@ -38,9 +40,12 @@ export const ShipmentsScreen = (props: Props) => {
       </StackView>
       <ListHeader />
       <FlatList
+        refreshing={isRefetching}
+        onRefresh={refetch}
         keyExtractor={i => i.shippingId}
         contentContainerStyle={{paddingHorizontal: SCREEN_PADDING, marginTop: 20}}
         renderItem={({item}) => <ShipmentTile shipment={item} />}
+        // data={data} DATA WILL REPLACE shipmentHistory IF API WERE TO BE WORKING
         data={!!filters ? filteredShipment : shipmentHistory}
       />
       <FilterSheet status={filters} onDone={setFilters} visible={isToggled} onClose={toggle} />

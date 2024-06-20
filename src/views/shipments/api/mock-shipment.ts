@@ -1,4 +1,4 @@
-import {Shipment} from './types';
+import {Shipment, ShipmentStatus} from './types';
 
 export const shipmentHistory: Shipment[] = [
   {
@@ -142,3 +142,5 @@ export const shipmentHistory: Shipment[] = [
     status: 'error',
   },
 ];
+
+export const shipmentStatusList = ['received', 'putaway', 'delivered', 'canceled', 'rejected', 'lost', 'on hold'] as ShipmentStatus[];

@@ -5,6 +5,7 @@ import {Button, ChevronLeftIcon, Text, TextInput} from 'components';
 import {useForm} from 'hooks';
 import {LoginForm} from './api/type';
 import {useLogin} from './api/service';
+import {useAuth} from 'contexts';
 
 type Props = {
   isVisible: boolean;
@@ -16,10 +17,14 @@ export const LoginScreen = ({isVisible, onClose}: Props) => {
     validationRule: {pwd: 'password', usr: 'email', url: 'url'},
   });
 
+  const {login} = useAuth();
+
   const {mutate, isPending} = useLogin();
 
   const onLogin = (v: LoginForm) => {
-    mutate(v);
+    //  mutate(v) will replace login if API were to be working
+    // mutate(v);
+    login({email: v.usr, id: 'user12334', username: 'Johnson'}, 'sdsdhskdhk');
   };
 
   return (

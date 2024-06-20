@@ -6,6 +6,7 @@ interface AuthContextType {
   login: (user: User, token: string) => void;
   logout: () => void;
   token: string | null;
+  isAuth: boolean;
 }
 
 export interface User {
@@ -37,7 +38,7 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
     delete axios.defaults.headers.common['Authorization'];
   };
 
-  return <AuthContext.Provider value={{user, login, logout, token}}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{isAuth: !!user && !!token, user, login, logout, token}}>{children}</AuthContext.Provider>;
 };
 
 // Custom hook to use the AuthContext
