@@ -22,11 +22,13 @@ export const BottomsTabs = () => {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarStyle: {height: IS_ANDROID ? 60 : 90, backgroundColor: COLORS.WHITE},
+        tabBarStyle: {height: IS_ANDROID ? 60 : 90, backgroundColor: COLORS.WHITE, paddingBottom: IS_ANDROID ? 10 : 25},
         tabBarLabelStyle: {fontFamily: FONTS.REGULAR, fontSize: 11, textTransform: 'capitalize', marginTop: -10},
         tabBarActiveTintColor: COLORS.PRIMARY,
         tabBarInactiveTintColor: COLORS.LIGHT_GREY,
-        headerStyle: {backgroundColor: COLORS.WHITE, shadowOffset: {height: 0, width: 0}},
+        headerStyle: {backgroundColor: COLORS.WHITE, shadowOffset: {height: 0, width: 0}, elevation: 0},
+        headerTitleAlign: 'center',
+        headerTitleStyle: {fontFamily: FONTS.MEDIUM},
       }}>
       <Tab.Screen
         name="shipments"

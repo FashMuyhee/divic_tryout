@@ -113,7 +113,7 @@ export const ShipmentTile = ({shipment}: Props) => {
         </View>
         <StackView style={{flex: 1}} justify="space-between">
           <StatusTag status={shipment.status} />
-          <Pressable onPress={toggleButton}>
+          <Pressable hitSlop={{left: 10, right: 10, bottom: 10, top: 10}} onPress={toggleButton}>
             <Animated.View style={[styles.iconBtn, iconBtn]}>
               <ExpandIcon isWhite={isToggled} />
             </Animated.View>
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
   wrapper: {
     borderRadius: BORDER_RADIUS,
     backgroundColor: COLORS.DIRT_GREY,
-    marginTop: 8,
+    marginBottom: 8,
   },
   container: {
     height: 70,
