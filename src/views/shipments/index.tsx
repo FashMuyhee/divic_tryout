@@ -39,7 +39,7 @@ export const ShipmentsScreen = (props: Props) => {
       <ListHeader />
       <FlatList
         keyExtractor={i => i.shippingId}
-        contentContainerStyle={{paddingHorizontal: SCREEN_PADDING, marginTop: 10}}
+        contentContainerStyle={{paddingHorizontal: SCREEN_PADDING, marginTop: 20}}
         renderItem={({item}) => <ShipmentTile shipment={item} />}
         data={!!filters ? filteredShipment : shipmentHistory}
       />
