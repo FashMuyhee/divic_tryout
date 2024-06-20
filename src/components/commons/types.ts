@@ -4,6 +4,7 @@ export interface ButtonProps {
   onPress?: () => void;
   text: string;
   isLoading?: boolean;
+  disabled?: boolean;
   textColor?: string;
   bgColor?: string;
   style?: StyleProp<ViewStyle>;
