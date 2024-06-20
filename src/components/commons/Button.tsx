@@ -20,10 +20,13 @@ export const Button = ({onPress, text, isLoading, textColor = COLORS.WHITE, bgCo
   return (
     <TouchableNativeFeedback onPress={onPress} disabled={isDisabled}>
       <View style={[styles.wrapper, {backgroundColor: bg}, style]}>
-        {isLoading && <ActivityIndicator size="small" color={COLORS.WHITE} />}
-        <Text textAlign="center" color={color} fontSize={17} fontWeight="bold">
-          {isLoading ? 'Loading' : text}
-        </Text>
+        {isLoading ? (
+          <ActivityIndicator size="small" color={COLORS.WHITE} />
+        ) : (
+          <Text textAlign="center" color={color} fontSize={17} fontWeight="bold">
+            {isLoading ? 'Loading' : text}
+          </Text>
+        )}
       </View>
     </TouchableNativeFeedback>
   );
