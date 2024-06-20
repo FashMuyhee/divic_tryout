@@ -5,8 +5,7 @@ import {StackView, Text} from 'components';
 import {ListHeader, Filter, ScanBarcode, Searchbar, ShipmentTile} from './components';
 import {useToggle} from 'hooks';
 import {FilterSheet} from './sheets';
-import {shipmentHistory} from './api/mock-shipment';
-import {useGetShipment} from './api/service';
+import {shipmentHistory, useGetShipment} from './api';
 
 type Props = {};
 

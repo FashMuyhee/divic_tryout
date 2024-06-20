@@ -2,8 +2,7 @@ import {View, Modal, Pressable} from 'react-native';
 import React from 'react';
 import {BORDER_RADIUS, COLORS, SCREEN_HEIGHT, SCREEN_WIDTH} from 'utils';
 import {StackView, Text} from 'components';
-import {useGetShipmentStatusList} from '../api/service';
-import {shipmentStatusList} from '../api/mock-shipment';
+import {useGetShipmentStatusList, shipmentStatusList} from '../api';
 
 type Props = {
   visible: boolean;

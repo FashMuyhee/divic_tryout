@@ -4,7 +4,7 @@ import {ArrowRightIcon, Button, CenterView, Checkbox, ExpandIcon, ParcelIcon, Ph
 import Animated, {Easing, interpolate, interpolateColor, ReduceMotion, runOnJS, useAnimatedStyle, useSharedValue, withTiming} from 'react-native-reanimated';
 import {BORDER_RADIUS, COLORS} from 'utils';
 import {useToggle} from 'hooks';
-import {Shipment, ShipmentStatus} from '../api/types';
+import {Shipment, ShipmentStatus} from '../api';
 
 type Props = {
   shipment: Shipment;
