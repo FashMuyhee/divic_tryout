@@ -44,7 +44,7 @@ export interface IconButtonProps {
   bg?: string;
 }
 
-export type TextInputType = 'text' | 'password' | 'email'|'url';
+export type TextInputType = 'text' | 'password' | 'email' | 'url';
 
 export interface TextInputProps {
   returnKeyType?: ReturnKeyType;
@@ -56,4 +56,10 @@ export interface TextInputProps {
   value?: string;
   onChangeText?: (t: string) => void;
   inputType?: TextInputType;
+}
+
+export interface CheckboxProps {
+  isChecked?: boolean;
+  onChange?: (value: boolean) => void;
+  disabled?: boolean;
 }
