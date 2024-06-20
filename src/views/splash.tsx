@@ -7,6 +7,7 @@ import {COLORS, SCREEN_WIDTH} from 'utils';
 import {Path, Svg} from 'react-native-svg';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AuthScreens, ProtectedScreens} from 'routes';
+import {useAuth} from 'contexts';
 
 const AnimatedSvg = Animated.createAnimatedComponent(Svg);
 
@@ -19,6 +20,8 @@ export const SplashScreen = ({navigation}: Props) => {
   const onboardContent = useSharedValue(0);
   const logoPx = useSharedValue(1);
   const [scaleCompleted, setScaleCompleted] = React.useState(false);
+
+  const {isAuth} = useAuth();
 
   const logoContentWrapperStyle = useAnimatedStyle(() => {
     return {
@@ -67,7 +70,8 @@ export const SplashScreen = ({navigation}: Props) => {
       4000,
       withTiming(4, {duration: 1000}, () => {
         // handles onboarding content
-        runOnJS(navigation.replace)('onboarding');
+        // @ts-ignore
+        runOnJS(navigation.replace)(isAuth ? 'dashboard' : 'onboarding');
       }),
     );
   };
