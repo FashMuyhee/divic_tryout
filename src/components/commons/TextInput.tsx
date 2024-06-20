@@ -78,7 +78,7 @@ export const TextInput = (props: TextInputProps) => {
       <View style={[styles.container, {borderWidth: isFocus ? 1 : 0, borderColor: getBorderColor()}]}>
         <Animated.Text style={[styles.label, animatedLabel]}>{placeholder}</Animated.Text>
         <StackView align="center">
-          {inputType == 'url' && isFocus && (
+          {inputType == 'url' && (isFocus || isFilled) && (
             <Text fontSize={16} color={labelColor}>
               https:// <Text color="#b7bbbf">| </Text>
             </Text>
