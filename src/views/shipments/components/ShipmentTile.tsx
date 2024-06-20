@@ -54,7 +54,7 @@ const StatusTag = ({status = 'error'}: {status: ShipmentStatus}) => {
   );
 };
 
-export const ShipmentTile = ({shipment}: Props) => {
+const ShipmentTileBaseComponent = ({shipment}: Props) => {
   const shareValue = useSharedValue(0);
   const [accordionHeight, setAccordionHeight] = React.useState(0);
   const [isToggled, onToggle] = useToggle();
@@ -161,6 +161,8 @@ export const ShipmentTile = ({shipment}: Props) => {
     </View>
   );
 };
+
+export const ShipmentTile = React.memo(ShipmentTileBaseComponent);
 
 const styles = StyleSheet.create({
   wrapper: {
