@@ -1,34 +1,35 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {BellIcon, ScreenWrapper, Text} from 'components';
+import {BellIcon} from 'components';
 import {ProfileIcon, ScanIcon, ShipmentIcon, WalletIcon} from './component';
 import React from 'react';
 import {RouteProp} from '@react-navigation/native';
 import {BottomTabScreens} from './types';
 import {COLORS, FONTS, IS_ANDROID, SCREEN_PADDING} from 'utils';
-import {Image} from 'react-native';
+import {Image, View} from 'react-native';
 import logoFull from 'assets/imgs/logo-full.png';
 import {IconButton} from 'components/commons/IconButton';
+import {ShipmentsScreen} from 'views';
 
 const Tab = createBottomTabNavigator<BottomTabScreens>();
 type Props = {
   route: RouteProp<BottomTabScreens>;
 };
 
-const PlaceholderScreen = ({route}: Props) => <ScreenWrapper></ScreenWrapper>;
+const PlaceholderScreen = ({route}: Props) => <View style={{flex: 1, backgroundColor: COLORS.WHITE}} />;
 
 export const BottomsTabs = () => {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarStyle: {height: IS_ANDROID ? 60 : 100, backgroundColor: COLORS.WHITE},
-        tabBarLabelStyle: {fontFamily: FONTS.REGULAR, fontSize: 11, textTransform: 'capitalize'},
+        tabBarStyle: {height: IS_ANDROID ? 60 : 90, backgroundColor: COLORS.WHITE},
+        tabBarLabelStyle: {fontFamily: FONTS.REGULAR, fontSize: 11, textTransform: 'capitalize', marginTop: -10},
         tabBarActiveTintColor: COLORS.PRIMARY,
         tabBarInactiveTintColor: COLORS.LIGHT_GREY,
-        headerStyle: {backgroundColor: COLORS.WHITE},
+        headerStyle: {backgroundColor: COLORS.WHITE, shadowOffset: {height: 0, width: 0}},
       }}>
       <Tab.Screen
         name="shipments"
-        component={PlaceholderScreen}
+        component={ShipmentsScreen}
         options={{
           tabBarIcon: ({focused}) => <ShipmentIcon active={focused} />,
           headerLeft: () => (
