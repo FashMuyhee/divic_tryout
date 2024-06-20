@@ -10,12 +10,9 @@ const isValidEmail = (email: string) => {
 };
 
 const isValidUrl = (url: string) => {
-  try {
-    new URL(url);
-    return true;
-  } catch (_) {
-    return false;
-  }
+  const regex = /^((http|https):\/\/)?([a-zA-Z0-9]+[.])+[a-zA-Z]{2,}(?:[:\/][^\s?]*)?$/;
+
+  return regex.test(url);
 };
 
 export const useValidation = (): FieldValidation => {
@@ -38,6 +35,8 @@ export const useValidation = (): FieldValidation => {
         break;
       case 'url':
         if (isValidUrl(String(value))) {
+          console.log('valid');
+
           error = null;
         } else error = 'Invalid url';
         break;
