@@ -3,3 +3,8 @@ export * from './bell';
 export * from './search';
 export * from './scan';
 export * from './filter';
+export * from './parcel';
+export * from './expand';
+export * from './arrow-right';
+export * from './whatsapp';
+export * from './phone';
