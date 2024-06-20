@@ -59,7 +59,7 @@ export const FilterSheet = ({onClose, visible, onDone, status}: Props) => {
   };
 
   return (
-    <Modal animationType="slide" visible={visible} onRequestClose={onClose} transparent statusBarTranslucent>
+    <Modal animationType="slide" visible={visible} onRequestClose={onClose} transparent>
       <View style={{height: SCREEN_HEIGHT, width: SCREEN_WIDTH, justifyContent: 'flex-end', backgroundColor: 'rgba(0,0,0,.4)'}}>
         <Pressable style={{flex: 1}} onPress={onClose} />
         <View style={{backgroundColor: COLORS.WHITE, height: SCREEN_HEIGHT * 0.4, borderTopLeftRadius: 20, borderTopRightRadius: 20}}>
