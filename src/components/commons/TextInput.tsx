@@ -4,6 +4,7 @@ import {TextInputProps} from './types';
 import {COLORS, FONTS} from 'utils';
 import Animated, {interpolate, interpolateColor, useAnimatedStyle, useSharedValue, withTiming} from 'react-native-reanimated';
 import {Text} from './Text';
+import {StackView} from './Flex';
 
 const placeholderColor = COLORS.GREY;
 const labelColor = COLORS.BLUE_GREY;
@@ -22,6 +23,8 @@ export const TextInput = (props: TextInputProps) => {
     switch (inputType) {
       case 'email':
         options = 'email-address';
+      case 'url':
+        options = 'url';
         break;
       default:
         options = 'default';
@@ -47,7 +50,7 @@ export const TextInput = (props: TextInputProps) => {
 
   const animatedLabel = useAnimatedStyle(() => {
     const fontSize = interpolate(isFocusedAnimatedVal.value, [0, 1], [16, 11]);
-    const top = interpolate(isFocusedAnimatedVal.value, [0, 1], [18, 8]);
+    const top = interpolate(isFocusedAnimatedVal.value, [0, 1], [18, 7]);
     const color = interpolateColor(isFocusedAnimatedVal.value, [0, 1], [placeholderColor, labelColor]);
     return {
       top,
@@ -74,23 +77,32 @@ export const TextInput = (props: TextInputProps) => {
     <View style={{marginBottom: mb, width: '100%'}}>
       <View style={[styles.container, {borderWidth: isFocus ? 1 : 0, borderColor: getBorderColor()}]}>
         <Animated.Text style={[styles.label, animatedLabel]}>{placeholder}</Animated.Text>
-        <RNTextInput
-          selectionColor={COLORS.PRIMARY}
-          cursorColor={COLORS.BLACK}
-          value={value}
-          onChangeText={onChangeText}
-          style={styles.input}
-          keyboardType={keyboardType}
-          returnKeyType={returnKeyType}
-          numberOfLines={1}
-          editable={!disabled}
-          textAlignVertical="auto"
-          onBlur={onBlur}
-          onFocus={onFocus}
-          secureTextEntry={isPasswordField}
-          focusable
-          autoCapitalize="none"
-        />
+        <StackView align="center">
+          {inputType == 'url' && (
+            <Text fontSize={16} color={labelColor}>
+              https:// <Text color="#b7bbbf">| </Text>
+            </Text>
+          )}
+          <View style={{flexGrow: 1}}>
+            <RNTextInput
+              selectionColor={COLORS.PRIMARY}
+              cursorColor={COLORS.BLACK}
+              value={value}
+              onChangeText={onChangeText}
+              style={styles.input}
+              keyboardType={keyboardType}
+              returnKeyType={returnKeyType}
+              numberOfLines={1}
+              editable={!disabled}
+              textAlignVertical="center"
+              onBlur={onBlur}
+              onFocus={onFocus}
+              secureTextEntry={isPasswordField}
+              focusable
+              autoCapitalize="none"
+            />
+          </View>
+        </StackView>
       </View>
       {Number(errorMessage?.length) > 0 && (
         <Text color={COLORS.RED} fontSize={12}>
@@ -104,8 +116,8 @@ export const TextInput = (props: TextInputProps) => {
 const styles = StyleSheet.create({
   container: {
     borderRadius: 10,
-    paddingVertical: 3,
-    paddingHorizontal: 7,
+    paddingVertical: 7,
+    paddingHorizontal: 14,
     backgroundColor: '#F4F2F8',
     alignItems: 'center',
     height: 56,
@@ -114,20 +126,19 @@ const styles = StyleSheet.create({
 
   label: {
     position: 'absolute',
-    left: 7,
+    left: 14,
     fontFamily: FONTS.REGULAR,
   },
   input: {
     backgroundColor: 'transparent',
-    height: '70%',
-    fontSize: 14,
+    height: 25,
+    fontSize: 16,
     fontFamily: FONTS.REGULAR,
     color: COLORS.PRIMARY,
     paddingVertical: 0,
     overflow: 'scroll',
     flexWrap: 'wrap',
     textAlign: 'justify',
-    textAlignVertical: 'auto',
     width: '100%',
   },
 });
