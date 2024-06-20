@@ -1,6 +1,6 @@
 import {Modal, Pressable, ScrollView, StyleSheet, View} from 'react-native';
 import React from 'react';
-import {COLORS, SCREEN_PADDING, SCREEN_WIDTH} from 'utils';
+import {COLORS, IS_ANDROID, SCREEN_PADDING, SCREEN_WIDTH} from 'utils';
 import {Button, ChevronLeftIcon, Text, TextInput} from 'components';
 import {useForm} from 'hooks';
 import {LoginForm} from './api/type';
@@ -46,7 +46,8 @@ export const LoginScreen = ({isVisible, onClose}: Props) => {
               <TextInput inputType="url" mb={27} errorMessage={errors?.url} value={values?.url} onChangeText={v => register({value: v, name: 'url'})} placeholder="URL" />
               <TextInput inputType="email" mb={27} errorMessage={errors?.usr} value={values?.usr} onChangeText={v => register({value: v, name: 'usr'})} placeholder="Username/email" />
               <TextInput inputType="password" errorMessage={errors?.pwd} value={values?.pwd} onChangeText={v => register({value: v, name: 'pwd'})} placeholder="Password" />
-              <Button isLoading={isPending} style={{position: 'absolute', width: '100%', alignSelf: 'center', bottom: 60}} text="Login" disabled={!values} onPress={() => handleSubmit(onLogin)} />
+              <View style={{flex: 1}} />
+              <Button isLoading={isPending} style={{marginBottom: 50}} text="Login" disabled={!values} onPress={() => handleSubmit(onLogin)} />
             </ScrollView>
           </View>
         </View>
@@ -63,7 +64,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 10,
     backgroundColor: COLORS.PRIMARY,
     marginBottom: -10,
-    marginTop: 60,
+    marginTop: IS_ANDROID ? 20 : 60,
     alignSelf: 'center',
   },
   modalWrapper: {
