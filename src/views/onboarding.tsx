@@ -6,7 +6,7 @@ import {Button} from 'components';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AuthScreens} from 'routes';
 import {useToggle} from 'hooks';
-import {LoginScreen} from './login';
+import {LoginScreen} from './auth';
 
 type Props = {
   navigation: StackNavigationProp<AuthScreens>;
