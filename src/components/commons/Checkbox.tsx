@@ -16,6 +16,7 @@ export const Checkbox = ({disabled, onChange, isChecked}: CheckboxProps) => {
       onPress={onChange}
       checkIconImageSource={check}
       iconImageStyle={{height: 12, width: 14}}
+      style={{width: 24}}
     />
   );
 };
