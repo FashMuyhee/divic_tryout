@@ -1,60 +1,19 @@
 import {View, StyleSheet, Pressable, Linking} from 'react-native';
 import React from 'react';
-import {ArrowRightIcon, Button, CenterView, Checkbox, ExpandIcon, ParcelIcon, PhoneIcon, StackView, Text, WhatsappIcon} from 'components';
+import {ArrowRightIcon, Button, Checkbox, ExpandIcon, ParcelIcon, PhoneIcon, StackView, Text, WhatsappIcon} from 'components';
 import Animated, {Easing, interpolate, interpolateColor, ReduceMotion, runOnJS, useAnimatedStyle, useSharedValue, withTiming} from 'react-native-reanimated';
-import {BORDER_RADIUS, COLORS} from 'utils';
+import {BORDER_RADIUS, COLORS, SCREEN_PADDING} from 'utils';
 import {useToggle} from 'hooks';
-import {Shipment, ShipmentStatus} from '../api';
+import {Shipment} from '../api';
+import {StatusTag} from './StatusTag';
 
 type Props = {
   shipment: Shipment;
+  isMarked: boolean;
+  onMarkedShipment: (id: string) => void;
 };
 
-const StatusTag = ({status = 'error'}: {status: ShipmentStatus}) => {
-  const color = React.useMemo(() => {
-    switch (status) {
-      case 'canceled':
-        return '#58536E';
-      case 'delivered':
-        return '#208D28';
-      case 'received':
-        return COLORS.PRIMARY;
-      case 'on hold':
-        return '#DB7E21';
-      case 'error':
-        return COLORS.RED;
-      default:
-        return COLORS.RED;
-    }
-  }, [status]);
-
-  const bgColor = React.useMemo(() => {
-    switch (status) {
-      case 'canceled':
-        return COLORS.DIRT_GREY;
-      case 'delivered':
-        return '#E3FAD6';
-      case 'received':
-        return '#D9E6FD';
-      case 'on hold':
-        return '#FFF3D5';
-      case 'error':
-        return '#FEE3D4';
-      default:
-        return '#FEE3D4';
-    }
-  }, [status]);
-
-  return (
-    <CenterView style={{backgroundColor: bgColor, borderRadius: 4, borderWidth: 1, borderColor: COLORS.WHITE, paddingHorizontal: 6, paddingVertical: 4}}>
-      <Text fontSize={11} color={color} textTransform="uppercase" textAlign="center">
-        {status}
-      </Text>
-    </CenterView>
-  );
-};
-
-const ShipmentTileBaseComponent = ({shipment}: Props) => {
+const ShipmentTileBaseComponent = ({shipment, isMarked, onMarkedShipment}: Props) => {
   const shareValue = useSharedValue(0);
   const [accordionHeight, setAccordionHeight] = React.useState(0);
   const [isToggled, onToggle] = useToggle();
@@ -92,7 +51,7 @@ const ShipmentTileBaseComponent = ({shipment}: Props) => {
     <View style={styles.wrapper}>
       {/* TOP CONTENT */}
       <View style={styles.container}>
-        <Checkbox />
+        <Checkbox isChecked={isMarked} onChange={() => onMarkedShipment(shipment.shippingId)} />
         <ParcelIcon />
         <View style={{width: '40%'}}>
           <Text color="#3F395C" fontSize={13}>
@@ -164,6 +123,23 @@ const ShipmentTileBaseComponent = ({shipment}: Props) => {
 
 export const ShipmentTile = React.memo(ShipmentTileBaseComponent);
 
+export const ShipmentTileLoader = () => {
+  return (
+    <View style={{paddingHorizontal: SCREEN_PADDING, marginTop: 20}}>
+      {Array(2)
+        .fill(4)
+        .map((_, index) => (
+          <StackView key={`loader_${index}`} style={[styles.container, styles.loaderContainer]} align="center" justify="space-between">
+            <View style={styles.checkbox} />
+            <View style={styles.details} />
+            <View style={styles.status} />
+            <View style={styles.toggle} />
+          </StackView>
+        ))}
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
   wrapper: {
     borderRadius: BORDER_RADIUS,
@@ -206,5 +182,34 @@ const styles = StyleSheet.create({
     height: 40,
     width: 'auto',
     paddingHorizontal: 20,
+  },
+  loaderContainer: {
+    backgroundColor: COLORS.DIRT_GREY,
+    marginBottom: 10,
+    borderRadius: BORDER_RADIUS,
+    paddingVertical: 10,
+  },
+  checkbox: {
+    height: 24,
+    width: 24,
+    borderRadius: 5,
+    backgroundColor: `${COLORS.GREY}40`,
+  },
+  details: {
+    height: '100%',
+    backgroundColor: `${COLORS.GREY}40`,
+    width: '45%',
+  },
+  status: {
+    width: '20%',
+    height: 20,
+    backgroundColor: `${COLORS.GREY}40`,
+    borderRadius: 5,
+  },
+  toggle: {
+    width: 30,
+    height: 30,
+    backgroundColor: `${COLORS.GREY}40`,
+    borderRadius: 15,
   },
 });
