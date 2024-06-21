@@ -18,13 +18,17 @@ export const LoginScreen = ({isVisible, onClose}: Props) => {
   });
 
   const {login} = useAuth();
-
+  const [isLoading, setIsLoading] = React.useState(false);
   const {mutate, isPending} = useLogin();
 
   const onLogin = (v: LoginForm) => {
     //  mutate(v) will replace login if API were to be working
     // mutate(v);
-    login({email: v.usr, id: 'user12334', username: 'Johnson'}, 'sdsdhskdhk');
+    setIsLoading(true);
+    setTimeout(() => {
+      login({email: v.usr, id: 'user12334', username: 'Johnson'}, 'sdsdhskdhk');
+      setIsLoading(false);
+    }, 3000);
   };
 
   return (
@@ -48,11 +52,31 @@ export const LoginScreen = ({isVisible, onClose}: Props) => {
                 Please enter your website url,email or username and password to login
               </Text>
 
-              <TextInput inputType="url" mb={27} errorMessage={errors?.url} value={values?.url} onChangeText={v => register({value: v, name: 'url'})} placeholder="URL" />
-              <TextInput inputType="email" mb={27} errorMessage={errors?.usr} value={values?.usr} onChangeText={v => register({value: v, name: 'usr'})} placeholder="Username/email" />
-              <TextInput inputType="password" errorMessage={errors?.pwd} value={values?.pwd} onChangeText={v => register({value: v, name: 'pwd'})} placeholder="Password" />
+              <TextInput
+                inputType="url"
+                mb={27}
+                errorMessage={errors?.url}
+                value={values?.url}
+                onChangeText={v => register({value: v, name: 'url'})}
+                placeholder="URL"
+              />
+              <TextInput
+                inputType="email"
+                mb={27}
+                errorMessage={errors?.usr}
+                value={values?.usr}
+                onChangeText={v => register({value: v, name: 'usr'})}
+                placeholder="Username/email"
+              />
+              <TextInput
+                inputType="password"
+                errorMessage={errors?.pwd}
+                value={values?.pwd}
+                onChangeText={v => register({value: v, name: 'pwd'})}
+                placeholder="Password"
+              />
               <View style={{flex: 1}} />
-              <Button isLoading={isPending} style={{marginBottom: 50}} text="Login" disabled={!values} onPress={() => handleSubmit(onLogin)} />
+              <Button isLoading={isLoading} style={{marginBottom: 50}} text="Login" disabled={!values} onPress={() => handleSubmit(onLogin)} />
             </ScrollView>
           </View>
         </View>
