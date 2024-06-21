@@ -23,6 +23,7 @@ export const TextInput = (props: TextInputProps) => {
     switch (inputType) {
       case 'email':
         options = 'email-address';
+        break;
       case 'url':
         options = 'url';
         break;
