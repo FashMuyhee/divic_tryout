@@ -6,6 +6,8 @@ import {useForm} from 'hooks';
 import {LoginForm} from './api/type';
 import {useLogin} from './api/service';
 import {useAuth} from 'contexts';
+import {NavigationProp, StackActions, useNavigation} from '@react-navigation/native';
+import {ProtectedScreens} from 'routes';
 
 type Props = {
   isVisible: boolean;
@@ -18,8 +20,11 @@ export const LoginScreen = ({isVisible, onClose}: Props) => {
   });
 
   const {login} = useAuth();
+  const navigation = useNavigation<NavigationProp<ProtectedScreens>>();
+
   const [isLoading, setIsLoading] = React.useState(false);
-  const {mutate, isPending} = useLogin();
+
+  // const {mutate, isPending} = useLogin();
 
   const onLogin = (v: LoginForm) => {
     //  mutate(v) will replace login if API were to be working
@@ -27,8 +32,9 @@ export const LoginScreen = ({isVisible, onClose}: Props) => {
     setIsLoading(true);
     setTimeout(() => {
       login({email: v.usr, id: 'user12334', username: 'Johnson'}, 'sdsdhskdhk');
+      navigation.dispatch(StackActions.replace('dashboard'));
       setIsLoading(false);
-    }, 3000);
+    }, 2000);
   };
 
   return (
